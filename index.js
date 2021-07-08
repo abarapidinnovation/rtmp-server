@@ -23,8 +23,8 @@ const nodeMediaServer = new NodeMediaServer(config)
 nodeMediaServer.run()
 
 nodeMediaServer.on('postPublish', (id, StreamPath, args) => {
-  ffmpeg(`ffmpeg -i rtmp://${process.env.RTMP_HOST}${StreamPath} -c:v copy -c:a copy -map 0 -f tee "[f=flv]rtmp://${process.env.RTMP_HOST}/live/stream2"`)
   console.log('++++++++++++++++++++++++++++++[NodeEvent on postPublish]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
+  ffmpeg(`ffmpeg -i rtmp://${process.env.RTMP_HOST}${StreamPath} -c:v copy -c:a copy -map 0 -f tee "[f=flv]rtmp://${process.env.RTMP_HOST}/live/stream2"`)
 })
     
 nodeMediaServer.on('donePublish', (id, StreamPath, args) => {
