@@ -1,0 +1,13 @@
+{
+  "name": "rtmp-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/abarapidinnovation/rtmp-server.git",
+  "author": "Akshit Bansal <aba@rapidinnovation.dev>",
+  "license": "MIT",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "express": "^4.17.1",
+    "node-media-server": "^2.3.8"
+  }
+}
