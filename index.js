@@ -17,7 +17,7 @@ const config = {
   ]}
 }
 
-app.listen( 3000 )
+app.listen( 5000 )
 
 const nodeMediaServer = new NodeMediaServer(config)
 nodeMediaServer.run()
