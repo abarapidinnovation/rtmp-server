@@ -2,6 +2,7 @@ const NodeMediaServer = require('node-media-server')
 const ffmpeg = require('child_process').exec
 const express = require('express')
 const app = express()
+require('dotenv').config()
 
 const config = {
   rtmp: { cport: 1935, chunk_size: 60000, gop_cache: true, ping: 30, ping_timeout: 60 },
@@ -23,8 +24,14 @@ const nodeMediaServer = new NodeMediaServer(config)
 nodeMediaServer.run()
 
 nodeMediaServer.on('postPublish', (id, StreamPath, args) => {
-  console.log('++++++++++++++++++++++++++++++[NodeEvent on postPublish]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
-  ffmpeg(`ffmpeg -i rtmp://${process.env.RTMP_HOST}${StreamPath} -c:v copy -c:a copy -map 0 -f tee "[f=flv]rtmp://${process.env.RTMP_HOST}/live/stream2"`)
+  console.log('++++++++++++++++++++++++++++++[NodeEvent on postPublish]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`)
+  const server1 = `rtmp://${process.env.RTMP_HOST}${StreamPath}`
+  const server2 = `rtmp://${process.env.RTMP_HOST}/live/stream2`
+  const url = `ffmpeg -i ${server1} -c:v copy -c:a copy -map 0 -f tee "[f=flv]${server2}"`
+  console.log('server1---->', server1)
+  console.log('server2---->', server2)
+  console.log('url---->', url)
+  ffmpeg(url)
 })
     
 nodeMediaServer.on('donePublish', (id, StreamPath, args) => {
